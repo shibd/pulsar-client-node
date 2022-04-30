@@ -21,24 +21,19 @@
   'conditions': [
     ['OS=="win"', {
       'variables': {
-        'pulsar_cpp_dir%': '<!(echo %PULSAR_CPP_DIR%)',
         'os_arch%': '<!(echo %OS_ARCH%)',
       }
     }],
-    ['OS=="mac"', {
-      'variables': {
-        'pulsar_cpp_dir': '<!(echo $PULSAR_CPP_DIR)'
-      }
-    }]
   ],
   "targets": [
     {
       "target_name": "Pulsar",
       "cflags_cc": ["-std=gnu++11"],
       "cflags!": ["-fno-exceptions"],
-      "cflags_cc!": ["-fno-exceptions", "-std=gnu++14", "-std=gnu++17"],
+       "cflags_cc!": ["-fno-exceptions", "-std=gnu++14", "-std=gnu++17"],
       "include_dirs": [
         "<!@(node -p \"require('node-addon-api').include\")",
+        "build-pulsar/install/include",
       ],
       "defines": ["NAPI_VERSION=4"],
       "sources": [
@@ -59,14 +54,13 @@
         ['OS=="mac"', {
           'xcode_settings': {
             'GCC_ENABLE_CPP_EXCEPTIONS': 'YES',
-            'CLANG_CXX_LIBRARY': 'libc++'
+            'GCC_ENABLE_CPP_RTTI': 'YES',
+            'MACOSX_DEPLOYMENT_TARGET': '11.0',
+            'CLANG_CXX_LANGUAGE_STANDARD': 'gnu++11',
+            'OTHER_CFLAGS': [
+                "-fPIC",
+            ]
           },
-          "include_dirs": [
-            "<(pulsar_cpp_dir)/include",
-          ],
-          "libraries": [
-            "<(pulsar_cpp_dir)/lib/libpulsar.dylib"
-          ],
         }],
         ['OS=="win"', {
           "defines": [
@@ -78,10 +72,10 @@
             },
           },
           "include_dirs": [
-            "<(pulsar_cpp_dir)\include",
+            "deps\\build\\install\\include",
           ],
           "libraries": [
-            "-l<(pulsar_cpp_dir)\\lib\Release\pulsar.lib"
+            "-ldeps\\build\\install\\lib\\Release\\pulsar.lib"
           ],
           "dependencies": [
             "<!(node -p \"require('node-addon-api').gyp\")"
@@ -103,11 +97,14 @@
             }
           ]
         }, {  # 'OS!="win"'
-          "libraries": [
-            "-lpulsar",
-          ],
           "dependencies": [
             "<!@(node -p \"require('node-addon-api').gyp\")"
+          ],
+          "include_dirs": [
+            "deps/build-pulsar/install/include",
+          ],
+          "libraries": [
+             "../deps/build-pulsar/install/lib/libpulsarwithdeps.a"
           ],
         }]
       ]
