@@ -46,9 +46,9 @@ fi
 ###############################################################################
 if [ ! -f openssl-OpenSSL_${OPENSSL_VERSION}.done ]; then
     echo "Building OpenSSL"
-    curl -O -L https://github.com/openssl/openssl/archive/OpenSSL_${OPENSSL_VERSION}.tar.gz
-    tar xfz OpenSSL_${OPENSSL_VERSION}.tar.gz
-    pushd openssl-OpenSSL_${OPENSSL_VERSION}
+    curl -O -L https://github.com/openssl/openssl/archive/refs/heads/OpenSSL_1_1_1-stable.zip
+    tar xfz OpenSSL_1_1_1-stable.zip
+    pushd openssl-OpenSSL_1_1_1-stable
       if [ $IS_MACOS = '1' ]; then
         ./Configure --prefix=$PREFIX no-shared darwin64-arm64-cc
         make -j8
