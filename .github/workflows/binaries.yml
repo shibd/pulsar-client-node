@@ -19,21 +19,21 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - macos-latest
-          - ubuntu-latest
+          - macos-12
+#          - ubuntu-latest
 #          - windows-latest
         arch:
-          - x86_64
+          - x86
         nodejs:
 #          - 12
 #          - 14
 #          - 16
 #          - 17
           - 18
-        include:
-          - os: macos-latest
-            nodejs: 18
-            arch: arm64
+#        include:
+#          - os: macos-12
+#            nodejs: 18
+#            arch: arm64
 #        include:
 #          - os: windows-latest
 #            node: 16
@@ -42,7 +42,8 @@ jobs:
     name: ${{ matrix.os }} (nodejs=${{ matrix.nodejs }}, arch=${{ matrix.arch }})
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Use Node.js ${{ matrix.nodejs }}
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.nodejs }}
 #          architecture: ${{ matrix.arch }}

@@ -28,6 +28,10 @@ PULSAR_VERSION=`cat $TOP_DIR/pulsar-version.txt`
 
 cd $DEPS_DIR
 
+
+echo "system versin+++++++:"
+uname -m
+
 mkdir -p build
 cd build
 
@@ -41,7 +45,8 @@ if [ $(uname) = "Darwin" ]; then
   IS_MACOS=1
   export CFLAGS="$CFLAGS -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}"
 #  ARCH_FLAGS="-arch arm64 -arch x86_64"
-  ARCH_FLAGS="-arch arm64"
+  ARCH_FLAGS="-arch x86_64"
+  export CONFIGURE_ARGS="--host=x86_64"
 else
   IS_MACOS=0
 fi
