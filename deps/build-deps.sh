@@ -152,7 +152,7 @@ if [ ! -f snappy-${SNAPPY_VERSION}.done ]; then
     curl -O -L https://github.com/google/snappy/releases/download/${SNAPPY_VERSION}/snappy-${SNAPPY_VERSION}.tar.gz
     tar xfz snappy-${SNAPPY_VERSION}.tar.gz
     pushd snappy-${SNAPPY_VERSION}
-      ./configure --prefix=$PREFIX $CONFIGURE_ARGS
+      ./configure --prefix=$PREFIX $CONFIGURE_ARGS2
       make -j16
       make install
     popd
@@ -174,7 +174,7 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
               --without-nghttp2 --without-libidn2 --disable-ldap \
               --without-librtmp --without-brotli \
               --prefix=$PREFIX \
-              $CONFIGURE_ARGS
+              $CONFIGURE_ARGS2
       make -j16 install
     popd
 
