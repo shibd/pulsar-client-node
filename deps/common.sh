@@ -39,14 +39,14 @@ mkdir -p install
 PREFIX=`pwd`/install
 
 export CFLAGS="-fPIC -O3"
-export ARCH_FLAGS="-arch $ARCH"
-export CONFIGURE_ARGS="--host=$ARCH"
-export CONFIGURE_ARGS2="--host=$ARCH"
 
 if [ $(uname) = "Darwin" ]; then
   sw_vers
   IS_MACOS=1
   export CFLAGS="$CFLAGS -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}"
+  export ARCH_FLAGS="-arch $ARCH"
+  export CONFIGURE_ARGS="--host=$ARCH"
+  export CONFIGURE_ARGS2="--host=$ARCH"
 else
   IS_MACOS=0
 fi
