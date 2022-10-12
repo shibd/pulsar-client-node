@@ -77,4 +77,4 @@ jobs:
           npm install -g node-pre-gyp-github
           node-pre-gyp-github publish
         env:
-          NODE_PRE_GYP_GITHUB_TOKEN: ${{ GITHUBTOKEN }}
+          NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
