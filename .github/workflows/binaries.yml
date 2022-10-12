@@ -34,9 +34,6 @@ jobs:
           node-version: ${{ matrix.nodejs }}
           cache: 'npm'
 
-      - name: Install dependencies
-        run: yarn install --ignore-scripts
-
       - name: Cache Dependencies
         id: cache-dependencies
         uses: actions/cache@v3
@@ -63,11 +60,8 @@ jobs:
           export ARCH=${{ matrix.arch }}
           deps/build-pulsar-lib.sh
 
-      - name: Configure build
-        run: yarn node-pre-gyp configure
-
       - name: Build binaries
-        run: yarn node-pre-gyp build
+        run: npm install
 
       - name: Print binary info
         if: contains(matrix.os, 'ubuntu')
@@ -84,9 +78,9 @@ jobs:
 
       - name: Package prebuilt binaries
         run: |
-          yarn node-pre-gyp package
+          node-pre-gyp package
 
       - name: Upload binaries to GitHub Release
-        run: yarn node-pre-gyp-github publish
+        run: node-pre-gyp-github publish
         env:
           NODE_PRE_GYP_GITHUB_TOKEN: ${{ github.token }}
