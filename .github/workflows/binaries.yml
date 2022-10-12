@@ -73,8 +73,9 @@ jobs:
           node-pre-gyp package
 
       - name: Upload binaries to GitHub Release
-        run: |
-          npm install -g node-pre-gyp-github
-          node-pre-gyp-github publish
         env:
           NODE_PRE_GYP_GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
+        run: |
+          npm install -g node-pre-gyp-github
+          echo $NODE_PRE_GYP_GITHUB_TOKEN
+          node-pre-gyp-github publish
