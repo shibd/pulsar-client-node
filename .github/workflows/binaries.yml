@@ -34,6 +34,9 @@ jobs:
           node-version: ${{ matrix.nodejs }}
           cache: 'npm'
 
+      - name: Install dependencies
+        run: yarn install --ignore-scripts
+
       - name: Cache Dependencies
         id: cache-dependencies
         uses: actions/cache@v3
