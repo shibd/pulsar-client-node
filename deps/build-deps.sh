@@ -46,9 +46,9 @@ fi
 ###############################################################################
 if [ ! -f openssl-OpenSSL_${OPENSSL_VERSION}.done ]; then
     echo "Building OpenSSL"
-    curl -O -L https://github.com/openssl/openssl/archive/OpenSSL_${OPENSSL_VERSION}.tar.gz
-    tar xfz OpenSSL_${OPENSSL_VERSION}.tar.gz
-    pushd openssl-OpenSSL_${OPENSSL_VERSION}
+    curl -O -L https://github.com/openssl/openssl/archive/refs/heads/OpenSSL_1_1_1-stable.zip
+    tar xfz OpenSSL_1_1_1-stable.zip
+    pushd openssl-OpenSSL_1_1_1-stable
       if [ $IS_MACOS = '1' ]; then
         ./Configure --prefix=$PREFIX no-shared darwin64-arm64-cc
         make -j8
@@ -105,7 +105,7 @@ if [ ! -f $DIR.done ]; then
                 install
 
     popd
-    
+
     touch $DIR.done
 
     rm -rf $DIR boost_${BOOST_VERSION_}.tar.gz
@@ -139,7 +139,7 @@ if [ ! -f zstd-${ZSTD_VERSION}.done ]; then
       PREFIX=$PREFIX \
             make -j16 -C lib install
     popd
-    
+
     touch zstd-${ZSTD_VERSION}.done
     rm -rf zstd-${ZSTD_VERSION} zstd-${ZSTD_VERSION}.tar.gz
 else
@@ -152,7 +152,7 @@ if [ ! -f snappy-${SNAPPY_VERSION}.done ]; then
     curl -O -L https://github.com/google/snappy/releases/download/${SNAPPY_VERSION}/snappy-${SNAPPY_VERSION}.tar.gz
     tar xfz snappy-${SNAPPY_VERSION}.tar.gz
     pushd snappy-${SNAPPY_VERSION}
-      ./configure --prefix=$PREFIX
+      ./configure --prefix=$PREFIX $CONFIGURE_ARGS2
       make -j16
       make install
     popd
@@ -173,7 +173,8 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
       ./configure --with-ssl=$PREFIX \
               --without-nghttp2 --without-libidn2 --disable-ldap \
               --without-librtmp --without-brotli \
-              --prefix=$PREFIX
+              --prefix=$PREFIX \
+              $CONFIGURE_ARGS2
       make -j16 install
     popd
 
@@ -182,3 +183,18 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
 else
     echo "Using cached LibCurl"
 fi
+
+pushd $PREFIX/lib
+echo "query all lib type"
+lipo -info libboost_system.a
+lipo -info libcrypto.a
+lipo -info libcurl.a
+lipo -info libprotobuf.a
+lipo -info libprotobuf-lite.a
+lipo -info libsnappy.a
+lipo -info libssl.a
+lipo -info libz.a
+lipo -info libzstd.a
+
+
+
