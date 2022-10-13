@@ -24,7 +24,7 @@ set -e -x
 
 DEPS_DIR=`cd $(dirname $0); pwd`
 TOP_DIR=$DEPS_DIR/..
-PULSAR_VERSION=`cat $TOP_DIR/pulsar-version.txt`
+PULSAR_CPP_VERSION=`cat $TOP_DIR/pulsar-client-cpp-version.txt`
 
 cd $DEPS_DIR
 

@@ -25,8 +25,6 @@ PULSAR_PREFIX=${PULSAR_DIR}/install
 mkdir -p $PULSAR_PREFIX
 cd $PULSAR_DIR
 
-PULSAR_CPP_VERSION=3.0.0
-
 # Pulsar
 curl -O -L https://dist.apache.org/repos/dist/dev/pulsar/pulsar-client-cpp-${PULSAR_CPP_VERSION}-candidate-1/apache-pulsar-client-cpp-${PULSAR_CPP_VERSION}.tar.gz
 tar xfz apache-pulsar-client-cpp-${PULSAR_CPP_VERSION}.tar.gz

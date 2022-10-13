@@ -1,4 +1,4 @@
-name: Build Binaries
+name: Build release napi
 on:
   workflow_dispatch:
   push:
@@ -46,13 +46,6 @@ jobs:
         run: |
           export ARCH=${{ matrix.arch }}
           deps/build-deps.sh
-
-      - name: Cache Pulsar lib
-        id: cache-pulsar
-        uses: actions/cache@v3
-        with:
-          path: deps/build-pulsar
-          key: ${{ runner.os }}-${{ matrix.arch }}-pulsar-${{ hashFiles('deps/build-*.sh') }}-${{ hashFiles('pulsar-version.txt') }}
 
       - name: Build Pulsar lib
         if: steps.cache-pulsar.outputs.cache-hit != 'true'
