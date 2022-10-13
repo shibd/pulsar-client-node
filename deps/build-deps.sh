@@ -50,20 +50,15 @@ if [ ! -f openssl-OpenSSL_${OPENSSL_VERSION}.done ]; then
     unzip OpenSSL_1_1_1-stable.zip
     pushd openssl-OpenSSL_1_1_1-stable
       if [ $IS_MACOS = '1' ]; then
-        ./Configure --prefix=$PREFIX no-shared darwin64-arm64-cc
+        if [ $IS_ARM = '1' ]; then
+          PLATFORM=darwin64-arm64-cc
+        else
+          PLATFORM=darwin64-x86_64-cc
+        fi
+
+        ./Configure --prefix=$PREFIX no-shared $PLATFORM
         make -j8
-
-        cp libssl.a libssl-arm64.a
-        cp libcrypto.a libcrypto-arm64.a
-
-        make clean
-        ./Configure --prefix=$PREFIX no-shared darwin64-x86_64-cc
-        make -j8 && make install_sw
-
-        # Create universal binaries
-        lipo -create libssl-arm64.a libssl.a -output $PREFIX/lib/libssl.a
-        lipo -create libcrypto-arm64.a libcrypto.a -output $PREFIX/lib/libcrypto.a
-
+        make install_sw
       else
         ## Linux
         if [ $IS_ARM = '1' ]; then
