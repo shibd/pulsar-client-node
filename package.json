@@ -63,7 +63,7 @@
     "module_path": "./lib/binding/",
     "host": "https://github.com/shibd/pulsar-client-node/releases/download/",
     "remote_path": "v{version}",
-    "package_name": "napi-{platform}-{libc}-{arch}.tar.gz"
+    "package_name": "napi-{platform}-{arch}.tar.gz"
   },
   "license-check-and-add-config": {
     "folder": ".",
