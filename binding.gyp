@@ -30,7 +30,7 @@
       "target_name": "Pulsar",
       "cflags_cc": ["-std=gnu++11"],
       "cflags!": ["-fno-exceptions"],
-       "cflags_cc!": ["-fno-exceptions", "-std=gnu++14", "-std=gnu++17"],
+      "cflags_cc!": ["-fno-exceptions", "-std=gnu++14", "-std=gnu++17"],
       "include_dirs": [
         "<!@(node -p \"require('node-addon-api').include\")",
         "build-pulsar/install/include",
