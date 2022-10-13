@@ -183,18 +183,3 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
 else
     echo "Using cached LibCurl"
 fi
-
-pushd $PREFIX/lib
-echo "query all lib type"
-lipo -info libboost_system.a
-lipo -info libcrypto.a
-lipo -info libcurl.a
-lipo -info libprotobuf.a
-lipo -info libprotobuf-lite.a
-lipo -info libsnappy.a
-lipo -info libssl.a
-lipo -info libz.a
-lipo -info libzstd.a
-
-
-
