@@ -38,7 +38,7 @@ Also, this library works only in Node.js 10.x or later because it uses the
 
 ## Compatibility
 
-Compatibility between each version of the Node.js client and the C++ client is as follows:
+Compatibili ty between each version of the Node.js client and the C++ client is as follows:
 
 | Node.js client | C++ client      |
 |----------------|-----------------|
