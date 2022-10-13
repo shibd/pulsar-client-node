@@ -44,7 +44,6 @@ if [ $(uname) = "Darwin" ]; then
   sw_vers
   IS_MACOS=1
   export CFLAGS="$CFLAGS -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}"
-
 else
   IS_MACOS=0
 fi
@@ -56,9 +55,6 @@ if [ "$ARCH" = "arm64" ] || [ $(uname -p) = "arm" ] || [ $(uname -p) = "aarch64"
   export CONFIGURE_ARGS2="--host=aarch64"
 else
   IS_ARM=0
-  export ARCH_FLAGS="-arch x86_64"
-  export CONFIGURE_ARGS="--host=x86_64"
-  export CONFIGURE_ARGS2="--host=x86_64"
 fi
 
 export CXXFLAGS="$CFLAGS"

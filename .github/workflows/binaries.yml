@@ -1,7 +1,6 @@
 name: Build Binaries
 on:
   workflow_dispatch:
-  pull_request:
   push:
     tags:
       - '*'
@@ -22,7 +21,12 @@ jobs:
         arch:
           - x86_64
         nodejs:
+          - 16
+          - 17
           - 18
+        include:
+          - os: ubuntu-latest
+            arch: arm64
     name: ${{ matrix.os }} (nodejs=${{ matrix.nodejs }}, arch=${{ matrix.arch }})
     steps:
       - uses: actions/checkout@v3
