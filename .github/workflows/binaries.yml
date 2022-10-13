@@ -25,6 +25,10 @@ jobs:
         nodejs:
           - 16
           - 18
+        include:
+          os: ubuntu-latest
+          arch: arm64
+          nodejs: 18
     name: ${{ matrix.os }} (nodejs=${{ matrix.nodejs }}, arch=${{ matrix.arch }})
     steps:
       - uses: actions/checkout@v3
