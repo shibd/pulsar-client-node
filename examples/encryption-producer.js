@@ -31,7 +31,7 @@ const Pulsar = require('pulsar-client');
     topic: 'persistent://public/default/my-topic',
     sendTimeoutMs: 30000,
     batchingEnabled: true,
-    publicKeyPath: "./certificate/public-key.client-rsa.pem",
+    publicKeyPath: "./test-test-conf/public-key.client-rsa.pem",
     encryptionKey: "encryption-key"
   });
 

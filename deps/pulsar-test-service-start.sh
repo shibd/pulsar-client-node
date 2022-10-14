@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -18,21 +18,20 @@
 # under the License.
 #
 
-ROOT_DIR=${ROOT_DIR:-$(git rev-parse --show-toplevel)}
-cd $ROOT_DIR
+set -e
 
-BUILD_IMAGE_NAME="${BUILD_IMAGE_NAME:-apachepulsar/pulsar-build}"
-BUILD_IMAGE_VERSION="${BUILD_IMAGE_VERSION:-ubuntu-20.04}"
+SRC_DIR=$(git rev-parse --show-toplevel)
+cd $SRC_DIR
 
-IMAGE="$BUILD_IMAGE_NAME:$BUILD_IMAGE_VERSION"
+./deps/pulsar-test-service-stop.sh
 
-echo "---- Testing Pulsar node client using image $IMAGE"
+CONTAINER_ID=$(docker run -i -p 8080:8080 -p 6650:6650 -p 8443:8443 -p 6651:6651 --rm --detach apachepulsar/pulsar:latest sleep 3600)
 
-docker pull $IMAGE
+echo $CONTAINER_ID >.tests-container-id.txt
 
-TARGET_DIR=/pulsar-client-node
-DOCKER_CMD="docker run -i -e ROOT_DIR=$TARGET_DIR -v $ROOT_DIR:$TARGET_DIR $IMAGE"
+docker cp tests/test-conf $CONTAINER_ID:/pulsar/test-conf
+docker cp deps/start-test-service-inside-container.sh $CONTAINER_ID:start-test-service-inside-container.sh
 
-# Start Pulsar standalone instance
-# and execute the tests
-$DOCKER_CMD bash -c "cd /pulsar-client-node && ./run-unit-tests.sh"
+docker exec -i $CONTAINER_ID /start-test-service-inside-container.sh
+
+echo "-- Ready to start tests"

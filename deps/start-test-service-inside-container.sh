@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -18,28 +18,14 @@
 # under the License.
 #
 
-set -e
+set -e -x
 
-ROOT_DIR=${ROOT_DIR:-$(git rev-parse --show-toplevel)}
-cd $ROOT_DIR
-
-VERSION="${VERSION:-`cat ./pulsar-version.txt`}"
-PULSAR_DIR="${PULSAR_DIR:-/tmp/pulsar-test-dist}"
-PKG=apache-pulsar-${VERSION}-bin.tar.gz
-
-rm -rf $PULSAR_DIR
-curl -L --create-dir "https://archive.apache.org/dist/pulsar/pulsar-${VERSION}/${PKG}" -o $PULSAR_DIR/$PKG
-tar xfz $PULSAR_DIR/$PKG -C $PULSAR_DIR --strip-components 1
-
-DATA_DIR=/tmp/pulsar-test-data
-rm -rf $DATA_DIR
-mkdir -p $DATA_DIR
-
-export PULSAR_STANDALONE_CONF=$ROOT_DIR/tests/conf/standalone.conf
-$PULSAR_DIR/bin/pulsar-daemon start standalone \
+export PULSAR_STANDALONE_CONF=test-conf/standalone.conf
+bin/pulsar-daemon start standalone \
         --no-functions-worker --no-stream-storage \
-        --zookeeper-dir $DATA_DIR/zookeeper \
-        --bookkeeper-dir $DATA_DIR/bookkeeper
+        --bookkeeper-dir data/bookkeeper
 
 echo "-- Wait for Pulsar service to be ready"
 until curl http://localhost:8080/metrics > /dev/null 2>&1 ; do sleep 1; done
+
+echo "-- Ready to start tests"

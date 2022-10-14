@@ -32,7 +32,7 @@ const Pulsar = require('pulsar-client');
     subscription: 'sub1',
     subscriptionType: 'Shared',
     ackTimeoutMs: 10000,
-    privateKeyPath: "./certificate/private-key.client-rsa.pem"
+    privateKeyPath: "./test-test-conf/private-key.client-rsa.pem"
   });
 
   // Receive messages

@@ -16,16 +16,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-name: Node.js
-on: [pull_request]
+name: PR validation
+on:
+  pull_request:
+    branches: ['master']
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
+  unit-tests:
+    name: Run unit tests
+    runs-on: ubuntu-22.04
+    timeout-minutes: 120
+
     steps:
-      - name: Check out code into the Node.js module directory
-        uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@v3
 
       - name: Test
         run: |
-          ./docker-tests.sh
+          ./run-unit-tests.sh
