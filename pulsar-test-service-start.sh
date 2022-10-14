@@ -31,10 +31,8 @@ echo $CONTAINER_ID >.tests-container-id.txt
 
 docker cp tests/conf $CONTAINER_ID:/pulsar/test-conf
 
-export PULSAR_STANDALONE_CONF=/pulsar/test-conf/standalone.conf
-docker exec -i $CONTAINER_ID " bin/pulsar-daemon start standalone \
-                                      --no-functions-worker --no-stream-storage \
-                                      --bookkeeper-dir data/bookkeeper"
+docker exec -i $CONTAINER_ID "export PULSAR_STANDALONE_CONF=/pulsar/test-conf/standalone.conf"
+docker exec -i $CONTAINER_ID "bin/pulsar-daemon start standalone --no-functions-worker --no-stream-storage --bookkeeper-dir data/bookkeeper"
 
 echo "-- Wait for Pulsar service to be ready"
 until curl http://localhost:8080/metrics > /dev/null 2>&1 ; do sleep 1; done
