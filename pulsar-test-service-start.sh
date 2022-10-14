@@ -29,10 +29,9 @@ CONTAINER_ID=$(docker run -i -p 8080:8080 -p 6650:6650 -p 8443:8443 -p 6651:6651
 
 echo $CONTAINER_ID >.tests-container-id.txt
 
-docker cp tests/conf $CONTAINER_ID:/pulsar/test-conf
-docker cp deps/start-test-service-inside-container.sh $CONTAINER_ID:start-test-service-inside-container.sh
+docker cp tests/conf $CONTAINER_ID:/pulsar/tests/conf
 
-export PULSAR_STANDALONE_CONF=test-conf/standalone.conf
+export PULSAR_STANDALONE_CONF=/pulsar/tests/conf/standalone.conf
 docker exec -i $CONTAINER_ID " bin/pulsar-daemon start standalone \
                                       --no-functions-worker --no-stream-storage \
                                       --bookkeeper-dir data/bookkeeper"
