@@ -20,7 +20,7 @@
 
 set -e -x
 
-ROOT_DIR=$(dirname $(dirname $0))
+ROOT_DIR=`cd $(dirname $0) && cd .. && pwd`
 CPP_CLIENT_VERSION=$(cat $ROOT_DIR/pulsar-client-cpp-version.txt | xargs)
 
 if [ $USER != "root" ]; then
@@ -34,7 +34,7 @@ cd /tmp
 
 # Fetch the client binaries
 ## TODO: Fetch from official release once it's available
-BASE_URL=https://dist.apache.org/repos/dist/dev/pulsar/pulsar-client-cpp-${CPP_CLIENT_VERSION}-candidate-1
+BASE_URL=https://dist.apache.org/repos/dist/dev/pulsar/pulsar-client-cpp-${CPP_CLIENT_VERSION}-candidate-2
 
 UNAME_ARCH=$(uname -m)
 if [ $UNAME_ARCH == 'aarch64' ]; then
@@ -63,7 +63,8 @@ else
   exit 1
 fi
 
-cp /usr/lib/libpulsarwithdeps.a $ROOT_DIR//deps/build-pulsar/install/lib/
+mkdir -p $ROOT_DIR/deps/build-pulsar/install/lib/
+cp /usr/lib/libpulsarwithdeps.a $ROOT_DIR/deps/build-pulsar/install/lib/
 
 
 

@@ -25,11 +25,12 @@ cd $ROOT_DIR
 
 # install pulsar cpp client pkg
 ./deps/install-cpp-client.sh
-apt-get -y update
-apt-get install -y software-properties-common
-add-apt-repository ppa:ubuntu-toolchain-r/test && apt-get -y update
-apt-get -y install gcc-4.9 && apt-get upgrade -y libstdc++6
+#apt-get -y update
+#apt-get install -y software-properties-common
+#add-apt-repository ppa:ubuntu-toolchain-r/test && apt-get -y update
+#apt-get -y install gcc-4.9 && apt-get upgrade -y libstdc++6
 
+cd $ROOT_DIR
 ./deps/pulsar-test-service-start.sh
 npm install && npm run lint && npm run dtslint && npm run build && npm run test
 RES=$?

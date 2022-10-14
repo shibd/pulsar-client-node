@@ -26,7 +26,7 @@ mkdir -p $PULSAR_PREFIX
 cd $PULSAR_DIR
 
 # Pulsar
-curl -O -L https://dist.apache.org/repos/dist/dev/pulsar/pulsar-client-cpp-${PULSAR_CPP_VERSION}-candidate-1/apache-pulsar-client-cpp-${PULSAR_CPP_VERSION}.tar.gz
+curl -O -L https://dist.apache.org/repos/dist/dev/pulsar/pulsar-client-cpp-${PULSAR_CPP_VERSION}-candidate-2/apache-pulsar-client-cpp-${PULSAR_CPP_VERSION}.tar.gz
 tar xfz apache-pulsar-client-cpp-${PULSAR_CPP_VERSION}.tar.gz
 pushd apache-pulsar-client-cpp-${PULSAR_CPP_VERSION}
   chmod +x ./build-support/merge_archives.sh
