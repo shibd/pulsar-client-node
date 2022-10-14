@@ -773,7 +773,7 @@ const Pulsar = require('../index.js');
         topic,
         sendTimeoutMs: 30000,
         batchingEnabled: true,
-        publicKeyPath: `${__dirname}/certificate/public-key.client-rsa.pem`,
+        publicKeyPath: `${__dirname}/test-conf/public-key.client-rsa.pem`,
         encryptionKey: 'encryption-key',
       });
 
@@ -782,7 +782,7 @@ const Pulsar = require('../index.js');
         subscription: 'sub1',
         subscriptionType: 'Shared',
         ackTimeoutMs: 10000,
-        privateKeyPath: `${__dirname}/certificate/private-key.client-rsa.pem`,
+        privateKeyPath: `${__dirname}/test-conf/private-key.client-rsa.pem`,
       });
 
       const messages = [];
