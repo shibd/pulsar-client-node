@@ -25,7 +25,15 @@ cd $SRC_DIR
 
 ./deps/pulsar-test-service-stop.sh
 
-CONTAINER_ID=$(docker run -i -p 8080:8080 -p 6650:6650 -p 8443:8443 -p 6651:6651 --rm --detach apachepulsar/pulsar:latest sleep 3600)
-echo $CONTAINER_ID > .tests-container-id.txt
+export PULSAR_STANDALONE_CONF=$ROOT_DIR/tests/conf/standalone.conf
+docker cp tests/conf/ $CONTAINER_ID:/pulsar/test-conf
+
+CONTAINER_ID=$(docker run -i -p 8080:8080 -p 6650:6650 -p 8443:8443 -p 6651:6651 --rm --detach \
+  -e "PULSAR_STANDALONE_CONF=/pulsar/test-conf/standalone.conf" apachepulsar/pulsar:latest sleep 3600)
+
+echo $CONTAINER_ID >.tests-container-id.txt
+
+echo "-- Wait for Pulsar service to be ready"
+until curl http://localhost:8080/metrics >/dev/null 2>&1; do sleep 1; done
 
 echo "-- Ready to start tests"
