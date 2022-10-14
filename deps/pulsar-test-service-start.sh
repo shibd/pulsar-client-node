@@ -25,10 +25,8 @@ cd $SRC_DIR
 
 ./deps/pulsar-test-service-stop.sh
 
-export PULSAR_STANDALONE_CONF=$ROOT_DIR/tests/conf/standalone.conf
-docker cp tests/conf/ $CONTAINER_ID:/pulsar/test-conf
-
 CONTAINER_ID=$(docker run -i -p 8080:8080 -p 6650:6650 -p 8443:8443 -p 6651:6651 --rm --detach \
+  -v tests/conf/:/pulsar/test-conf
   -e "PULSAR_STANDALONE_CONF=/pulsar/test-conf/standalone.conf" apachepulsar/pulsar:latest sleep 3600)
 
 echo $CONTAINER_ID >.tests-container-id.txt
