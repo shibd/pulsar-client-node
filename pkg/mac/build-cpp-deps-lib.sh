@@ -154,14 +154,20 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
     curl -O -L  https://github.com/curl/curl/releases/download/curl-${CURL_VERSION_}/curl-${CURL_VERSION}.tar.gz
     tar xfz curl-${CURL_VERSION}.tar.gz
     pushd curl-${CURL_VERSION}
-      CFLAGS="-fPIC -arch ${ARCH} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}" \
+      if [ $ARCH = 'arm64' ]; then
+        HOST=aarch64
+      else
+        HOST=x86_64
+      fi
+      CFLAGS="-fPIC -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}" \
         ./configure --with-ssl=$PREFIX \
                 --without-nghttp2 \
                 --without-libidn2 \
                 --disable-ldap \
                 --without-librtmp \
                 --without-brotli \
-                --prefix=$PREFIX
+                --prefix=$PREFIX \
+                --host=$HOST
       make -j16 install
     popd
 
