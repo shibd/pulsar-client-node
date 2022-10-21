@@ -35,9 +35,9 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
 
-      - name: Test
+      - name: Run Test
         run: |
-          ./test/run-unit-tests.sh
+          ./tests/run-unit-tests.sh
 
   macos-napi:
     name: Build NAPI macos - Node ${{matrix.nodejs}} - ${{matrix.arch}}
