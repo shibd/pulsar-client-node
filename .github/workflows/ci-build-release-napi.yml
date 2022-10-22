@@ -77,8 +77,8 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: macos-${{matrix.nodejs}}-${{matrix.arch}}
-          path: lib/binding/Pulsar.node
+          name: ${{matrix.image}}-${{matrix.nodejs}}-${{matrix.cpu.platform}}
+          path: build/stage/*/*.tar.gz
 
   linux-napi:
     name: Build NAPI ${{matrix.image}} - Node ${{matrix.nodejs}} - ${{matrix.cpu.platform}}
@@ -131,4 +131,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{matrix.image}}-${{matrix.nodejs}}-${{matrix.cpu.platform}}
-          path: lib/binding/Pulsar.node
+          path: build/stage/*/*.tar.gz

@@ -64,5 +64,11 @@ with urllib.request.urlopen(request) as response:
             finally:
                 os.unlink(tmp_zip.name)
 
+    for root, dirs, files in os.walk(dest_path, topdown=False):
+        for name in files:
+            shutil.move(os.path.join(root, name), dest_path)
+        if not os.listdir(root):
+            os.rmdir(root)
+
 
 
