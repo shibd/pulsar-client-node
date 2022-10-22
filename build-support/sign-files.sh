@@ -20,18 +20,13 @@
 
 set -e
 
-SRC_DIR=$(git rev-parse --show-toplevel)
-cd $SRC_DIR
+FILES=$*
 
-build-support/pulsar-test-service-stop.sh
+for FILE in $FILES
+do
+   echo "Signing $FILE"
+   gpg --armor --output $FILE.asc --detach-sig $FILE
 
-CONTAINER_ID=$(docker run -i -p 8080:8080 -p 6650:6650 -p 8443:8443 -p 6651:6651 --rm --detach apachepulsar/pulsar:latest sleep 3600)
-
-echo $CONTAINER_ID >.tests-container-id.txt
-
-docker cp ../tests/conf $CONTAINER_ID:/pulsar/test-conf
-docker cp pulsar-test-container-start.sh $CONTAINER_ID:pulsar-test-container-start.sh
-
-docker exec -i $CONTAINER_ID /pulsar-test-container-start.sh
-
-echo "-- Ready to start tests"
+   # SHA-512 signature
+   shasum -a 512 $FILE > $FILE.sha512
+done

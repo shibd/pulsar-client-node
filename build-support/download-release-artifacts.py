@@ -33,7 +33,7 @@ if 'GITHUB_TOKEN' not in os.environ:
 GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
 
 ACCEPT_HEADER = 'application/vnd.github+json'
-LIST_URL = 'https://api.github.com/repos/apache/pulsar-client-cpp/actions/runs/%d/artifacts'
+LIST_URL = 'https://api.github.com/repos/apache/pulsar-client-node/actions/runs/%d/artifacts'
 
 workflow_run_id = int(sys.argv[1])
 dest_path = sys.argv[2]

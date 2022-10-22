@@ -17,21 +17,12 @@
 # specific language governing permissions and limitations
 # under the License.
 #
+ROOT_DIR=$(git rev-parse --show-toplevel)
 
-set -e
+VERSION=$(cat ${ROOT_DIR}/version.txt)
 
-SRC_DIR=$(git rev-parse --show-toplevel)
-cd $SRC_DIR
+NAME=apache-pulsar-client-cpp-$VERSION
 
-build-support/pulsar-test-service-stop.sh
+OUT_DIR=${1:-.}
 
-CONTAINER_ID=$(docker run -i -p 8080:8080 -p 6650:6650 -p 8443:8443 -p 6651:6651 --rm --detach apachepulsar/pulsar:latest sleep 3600)
-
-echo $CONTAINER_ID >.tests-container-id.txt
-
-docker cp ../tests/conf $CONTAINER_ID:/pulsar/test-conf
-docker cp pulsar-test-container-start.sh $CONTAINER_ID:pulsar-test-container-start.sh
-
-docker exec -i $CONTAINER_ID /pulsar-test-container-start.sh
-
-echo "-- Ready to start tests"
+git archive --format=tar.gz --prefix ${NAME}/ -o ${OUT_DIR}/${NAME}.tar.gz HEAD

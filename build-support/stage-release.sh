@@ -18,20 +18,27 @@
 # under the License.
 #
 
-set -e
+set -e -x
 
-SRC_DIR=$(git rev-parse --show-toplevel)
-cd $SRC_DIR
+if [ $# -neq 2 ]; then
+    echo "Usage: $0 \$DEST_PATH \$WORKFLOW_ID"
+    exit 1
+fi
 
-build-support/pulsar-test-service-stop.sh
+DEST_PATH=$(readlink -f $1)
+WORKFLOW_ID=$2
 
-CONTAINER_ID=$(docker run -i -p 8080:8080 -p 6650:6650 -p 8443:8443 -p 6651:6651 --rm --detach apachepulsar/pulsar:latest sleep 3600)
+pushd $(dirname "$0")
+PULSAR_CPP_PATH=$(git rev-parse --show-toplevel)
+popd
 
-echo $CONTAINER_ID >.tests-container-id.txt
+mkdir -p $DEST_PATH
 
-docker cp ../tests/conf $CONTAINER_ID:/pulsar/test-conf
-docker cp pulsar-test-container-start.sh $CONTAINER_ID:pulsar-test-container-start.sh
+cd $PULSAR_CPP_PATH
 
-docker exec -i $CONTAINER_ID /pulsar-test-container-start.sh
+build-support/generate-source-archive.sh $DEST_PATH
+build-support/download-release-artifacts.py $WORKFLOW_ID $DEST_PATH
 
-echo "-- Ready to start tests"
+# Sign all files
+cd $DEST_PATH
+find . -type f | xargs $PULSAR_CPP_PATH/build-support/sign-files.sh
