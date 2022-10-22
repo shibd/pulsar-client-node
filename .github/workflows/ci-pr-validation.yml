@@ -145,3 +145,9 @@ jobs:
         run: |
           docker run -i -v $PWD:/pulsar-client-node build:latest \
               /pulsar-client-node/pkg/build-napi-inside-docker.sh
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{matrix.image}}-${{matrix.nodejs}}-${{matrix.cpu.platform}}
+          path: lib/binding/Pulsar.node
