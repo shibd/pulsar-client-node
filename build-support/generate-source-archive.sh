@@ -19,7 +19,7 @@
 #
 ROOT_DIR=$(git rev-parse --show-toplevel)
 
-VERSION=$(cat ${ROOT_DIR}/version.txt)
+VERSION=$(npm version | grep pulsar-client | awk -F ':' '{print $2}' | sed "s?'??g" | sed "s?,??g" | sed "s? ??g")
 
 NAME=apache-pulsar-client-node-$VERSION
 
