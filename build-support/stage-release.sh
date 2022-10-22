@@ -29,16 +29,16 @@ DEST_PATH=$(readlink -f $1)
 WORKFLOW_ID=$2
 
 pushd $(dirname "$0")
-PULSAR_CPP_PATH=$(git rev-parse --show-toplevel)
+PULSAR_NODE_PATH=$(git rev-parse --show-toplevel)
 popd
 
 mkdir -p $DEST_PATH
 
-cd $PULSAR_CPP_PATH
+cd $PULSAR_NODE_PATH
 
 build-support/generate-source-archive.sh $DEST_PATH
 build-support/download-release-artifacts.py $WORKFLOW_ID $DEST_PATH
 
 # Sign all files
 cd $DEST_PATH
-find . -type f | xargs $PULSAR_CPP_PATH/build-support/sign-files.sh
+find . -type f | xargs $PULSAR_NODE_PATH/build-support/sign-files.sh

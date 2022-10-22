@@ -29,8 +29,8 @@ CONTAINER_ID=$(docker run -i -p 8080:8080 -p 6650:6650 -p 8443:8443 -p 6651:6651
 
 echo $CONTAINER_ID >.tests-container-id.txt
 
-docker cp ../tests/conf $CONTAINER_ID:/pulsar/test-conf
-docker cp pulsar-test-container-start.sh $CONTAINER_ID:pulsar-test-container-start.sh
+docker cp $SRC_DIR/tests/conf $CONTAINER_ID:/pulsar/test-conf
+docker cp $SRC_DIR/build-support/pulsar-test-container-start.sh $CONTAINER_ID:pulsar-test-container-start.sh
 
 docker exec -i $CONTAINER_ID /pulsar-test-container-start.sh
 

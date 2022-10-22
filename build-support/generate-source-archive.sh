@@ -21,7 +21,7 @@ ROOT_DIR=$(git rev-parse --show-toplevel)
 
 VERSION=$(cat ${ROOT_DIR}/version.txt)
 
-NAME=apache-pulsar-client-cpp-$VERSION
+NAME=apache-pulsar-client-node-$VERSION
 
 OUT_DIR=${1:-.}
 
