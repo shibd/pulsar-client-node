@@ -1,0 +1,37 @@
+name: Build release napi
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'new_windows'
+    tags:
+      - '*'
+env:
+  FORCE_COLOR: 1
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+jobs:
+  windows-napi:
+    name: Build NAPI windows - Node ${{matrix.nodejs}} - ${{matrix.arch}}
+    runs-on: windows-2022
+    timeout-minutes: 3000
+
+    strategy:
+      fail-fast: false
+      matrix:
+        arch:
+          - x86_64
+        nodejs:
+          - 16
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.nodejs }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.nodejs }}
+          cache: 'npm'
+
+      - uses: actions/checkout@v2
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
