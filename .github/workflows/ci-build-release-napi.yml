@@ -38,9 +38,9 @@ jobs:
           path: pkg/mac/build
           key: ${{ runner.os }}-${{ matrix.arch }}-mac-${{ hashFiles('pkg/mac/build-cpp-deps-lib.sh') }}
 
-#      - uses: actions/checkout@v2
-#      - name: Setup upterm session
-#        uses: lhotari/action-upterm@v1
+      - uses: actions/checkout@v2
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
 
       - name: Build CPP dependencies lib
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
