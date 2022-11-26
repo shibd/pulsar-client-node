@@ -147,8 +147,8 @@ if [ ! -f snappy-${SNAPPY_VERSION}.done ]; then
     curl -O -L https://github.com/google/snappy/archive/refs/tags/${SNAPPY_VERSION}.tar.gz
     tar xfz ${SNAPPY_VERSION}.tar.gz
     pushd snappy-${SNAPPY_VERSION}
-      CXXFLAGS="-fPIC -O3 -arch ${ARCH} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}" \
-          cmake . -DCMAKE_INSTALL_PREFIX=$PREFIX -DSNAPPY_BUILD_TESTS=OFF -DSNAPPY_BUILD_BENCHMARKS=OFF
+      CXXFLAGS="-fPIC -O3 -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}" \
+          cmake . -DCMAKE_OSX_ARCHITECTURES=${ARCH} -DCMAKE_INSTALL_PREFIX=$PREFIX -DSNAPPY_BUILD_TESTS=OFF -DSNAPPY_BUILD_BENCHMARKS=OFF
       make -j16
       make install
       touch .done
@@ -167,7 +167,12 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
     curl -O -L  https://github.com/curl/curl/releases/download/curl-${CURL_VERSION_}/curl-${CURL_VERSION}.tar.gz
     tar xfz curl-${CURL_VERSION}.tar.gz
     pushd curl-${CURL_VERSION}
-      CFLAGS="-fPIC -arch ${ARCH} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}" \
+      if [ $ARCH = 'arm64' ]; then
+        PLATFORM=aarch64
+      else
+        PLATFORM=$ARCH
+      fi
+      CFLAGS="-fPIC -O3 -arch ${ARCH} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}" \
             ./configure --with-ssl=$PREFIX \
               --without-nghttp2 \
               --without-libidn2 \
@@ -175,7 +180,8 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
               --without-brotli \
               --without-secure-transport \
               --disable-ipv6 \
-              --prefix=$PREFIX
+              --prefix=$PREFIX \
+              --host=$PLATFORM
       make -j16 install
     popd
 
