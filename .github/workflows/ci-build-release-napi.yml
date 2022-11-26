@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         arch:
-          - x64
+#          - x64
           - arm64
         nodejs:
           - 18
@@ -37,6 +37,10 @@ jobs:
         with:
           path: pkg/mac/build
           key: ${{ runner.os }}-${{ matrix.arch }}-mac-${{ hashFiles('pkg/mac/build-cpp-deps-lib.sh') }}
+
+      - uses: actions/checkout@v2
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
 
       - name: Build CPP dependencies lib
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
