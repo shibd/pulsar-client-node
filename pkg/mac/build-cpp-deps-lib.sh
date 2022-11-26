@@ -181,7 +181,7 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
               --without-secure-transport \
               --disable-ipv6 \
               --prefix=$PREFIX \
-              --host=$$ARCH
+              --host=$ARCH
       make -j16 install
     popd
 
