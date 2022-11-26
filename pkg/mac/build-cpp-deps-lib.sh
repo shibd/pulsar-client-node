@@ -171,7 +171,7 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
       else
         PLATFORM=$ARCH
       fi
-      CFLAGS="-fPIC -arch ${ARCH} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}" \
+      CFLAGS="-fPIC -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}" \
             ./configure --with-ssl=$PREFIX \
               --without-nghttp2 \
               --without-libidn2 \
