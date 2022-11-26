@@ -57,7 +57,7 @@ jobs:
           path: pkg/mac/build
           key: ${{ runner.os }}-${{ matrix.arch }}-mac-${{ hashFiles('pkg/mac/build-cpp-deps-lib.sh') }}
 
-      - name: Build Node binaries lib
+      - name: Build Node binaries liba
         run: |
           npm install --ignore-scripts
           npx node-pre-gyp configure --target_arch=${{ env.TARGET }}
