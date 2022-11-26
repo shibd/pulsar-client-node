@@ -172,7 +172,7 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
       else
         PLATFORM=$ARCH
       fi
-      CFLAGS="-fPIC -O3 -arch ${ARCH} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}" \
+      CFLAGS="-fPIC -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}" \
             ./configure --with-ssl=$PREFIX \
               --without-nghttp2 \
               --without-libidn2 \
@@ -181,7 +181,7 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
               --without-secure-transport \
               --disable-ipv6 \
               --prefix=$PREFIX \
-              --host=$ARCH
+              --host=$PLATFORM
       make -j16 install
     popd
 
