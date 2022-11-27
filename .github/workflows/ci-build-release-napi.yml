@@ -38,19 +38,24 @@ jobs:
           path: pkg/mac/build
           key: ${{ runner.os }}-${{ matrix.arch }}-mac-${{ hashFiles('pkg/mac/build-cpp-deps-lib.sh') }}
 
+      - name: Add arch env vars
+        run: |
+          if [ "${{ matrix.arch }}" = "x64" ]; then
+            echo "ARCH=x86_64" >> $GITHUB_ENV
+          else
+            echo "ARCH=${{ matrix.target }}" >> $GITHUB_ENV
+          fi
+
       - name: Build CPP dependencies lib
         if: steps.cache-dependencies.outputs.cache-hit != 'true'
         run: |
-          if [ "${{ matrix.arch }}" = "x64" ]; then
-            export ARCH=x86_64
-          else
-            export ARCH=${{ matrix.arch }}
-          fi
+          export ARCH={{ env.ARCH }}
           pkg/mac/build-cpp-deps-lib.sh
 
       - name: Build CPP lib
         if: steps.cache-pulsar.outputs.cache-hit != 'true'
         run: |
+          export ARCH={{ env.ARCH }}
           pkg/mac/build-cpp-lib.sh
 
       - name: Build Node binaries lib
