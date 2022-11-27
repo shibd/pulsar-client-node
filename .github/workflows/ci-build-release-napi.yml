@@ -59,9 +59,9 @@ jobs:
           npx node-pre-gyp configure --target_arch=${{ matrix.arch }} 
           npx node-pre-gyp build --target_arch=${{ matrix.arch }} 
 
-#      - name: Test loading Node binaries lib
-#        run: |
-#          node pkg/load_test.js
+      - name: Test loading Node binaries lib
+        run: |
+          node pkg/load_test.js
 
       - name: Package Node binaries lib
         run: |
