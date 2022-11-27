@@ -19,7 +19,7 @@
 name: PR validation
 on:
   pull_request:
-    branches: ['master']
+    branches: ['master2']
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
