@@ -60,6 +60,7 @@ jobs:
           npx node-pre-gyp build --target_arch=${{ matrix.arch }}
 
       - name: Test loading Node binaries lib
+        if: matrix.arch == x64
         run: |
           node pkg/load_test.js
 
