@@ -94,6 +94,10 @@ You can see more examples in the [examples](./examples) directory. However, sinc
 
 ## How to build
 
+> **Note**
+>
+> Compiling from source code requires the Node.js version greater than 16.18
+
 First, clone the repository.
 
 ```shell
