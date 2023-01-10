@@ -64,7 +64,8 @@ if [ ! -f openssl-OpenSSL_${OPENSSL_VERSION_UNDERSCORE}.done ]; then
         else
           PLATFORM=darwin64-x86_64-cc
         fi
-        ./Configure --prefix=$PREFIX no-shared no-unit-test $PLATFORM
+        CFLAGS="-fPIC -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}" \
+            ./Configure --prefix=$PREFIX no-shared no-unit-test $PLATFORM
         make -j8
         make install_sw
     popd
@@ -172,7 +173,7 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
               --without-libidn2 \
               --disable-ldap \
               --without-brotli \
-              --without-secure-transport \
+              --with-secure-transport \
               --disable-ipv6 \
               --prefix=$PREFIX \
               --host=$ARCH-apple-darwin
