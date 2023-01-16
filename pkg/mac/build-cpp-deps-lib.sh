@@ -167,13 +167,13 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
     curl -O -L  https://github.com/curl/curl/releases/download/curl-${CURL_VERSION_}/curl-${CURL_VERSION}.tar.gz
     tar xfz curl-${CURL_VERSION}.tar.gz
     pushd curl-${CURL_VERSION}
-      if [ $ARCH = 'arm64' ]; then
-        SSL_CONF="--with-secure-transport"
-      else
-        SSL_CONF="--without-secure-transport --with-ssl=$PREFIX"
-      fi
+#      if [ $ARCH = 'arm64' ]; then
+#        SSL_CONF="--with-secure-transport"
+#      else
+#        SSL_CONF="--without-secure-transport --with-ssl=$PREFIX"
+#      fi
       CFLAGS="-fPIC -arch ${ARCH} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}" \
-            ./configure ${SSL_CONF} \
+            ./configure --without-secure-transport --with-ssl=$PREFIX \
               --without-nghttp2 \
               --without-libidn2 \
               --disable-ldap \

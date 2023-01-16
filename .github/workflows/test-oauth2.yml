@@ -91,4 +91,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: windows-${{matrix.nodejs}}-${{matrix.arch}}
-          path: build/stage/*/*.tar.gz
+          path: |
+           pkg/mac/
+           build/stage/*/*.tar.gz
