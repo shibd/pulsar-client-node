@@ -179,8 +179,8 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
               --disable-ldap \
               --without-brotli \
               --disable-ipv6 \
-              --prefix=$PREFIX \
-              --host=$ARCH-apple-darwin
+              --prefix=$PREFIX
+#              --host=$ARCH-apple-darwin
       make -j16 install
     popd
 
