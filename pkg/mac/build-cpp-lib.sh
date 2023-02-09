@@ -26,9 +26,9 @@ mkdir -p $PULSAR_PREFIX
 cd $PULSAR_DIR
 
 ## Fetch from official release
-curl -O -L https://github.com/BewareMyPower/pulsar-client-cpp/archive/refs/tags/v3.1.2-rc0.zip
-unzip v3.1.2-rc0.zip
-pushd pulsar-client-cpp-3.1.2-rc0
+curl -O -L "$CPP_CLIENT_BASE_URL"/apache-pulsar-client-cpp-${CPP_CLIENT_VERSION}.tar.gz
+tar xfz apache-pulsar-client-cpp-${CPP_CLIENT_VERSION}.tar.gz
+pushd apache-pulsar-client-cpp-${CPP_CLIENT_VERSION}
   rm -f CMakeCache.txt
   cmake . \
       -DCMAKE_OSX_ARCHITECTURES=${ARCH} \
@@ -45,4 +45,4 @@ pushd pulsar-client-cpp-3.1.2-rc0
   make -j16 install
 popd
 
-#rm -rf apache-pulsar-client-cpp-${CPP_CLIENT_VERSION}.tar.gz apache-pulsar-client-cpp-${CPP_CLIENT_VERSION}
+rm -rf apache-pulsar-client-cpp-${CPP_CLIENT_VERSION}.tar.gz apache-pulsar-client-cpp-${CPP_CLIENT_VERSION}
