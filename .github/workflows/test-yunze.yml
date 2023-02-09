@@ -49,12 +49,12 @@ jobs:
           node-version: ${{ matrix.nodejs }}
           cache: 'npm'
 
-      - name: Cache Dependencies
-        id: cache-dependencies
-        uses: actions/cache@v3
-        with:
-          path: pkg/mac/build
-          key: ${{ runner.os }}-${{ matrix.arch }}-mac-${{ hashFiles('pkg/mac/build-cpp-deps-lib.sh') }}
+#      - name: Cache Dependencies
+#        id: cache-dependencies
+#        uses: actions/cache@v3
+#        with:
+#          path: pkg/mac/build
+#          key: ${{ runner.os }}-${{ matrix.arch }}-mac-${{ hashFiles('pkg/mac/build-cpp-deps-lib.sh') }}
 
       - name: Add arch env vars
         run: |
