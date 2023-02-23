@@ -169,7 +169,7 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
       CFLAGS="-fPIC -arch ${ARCH} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}" \
             ./configure --with-ssl=$PREFIX \
               --without-nghttp2 \
-              --with-ca-bundle="/etc/ssl/cert.pem" \
+              --without-ca-bundle \
               --without-libidn2 \
               --disable-ldap \
               --without-brotli \
