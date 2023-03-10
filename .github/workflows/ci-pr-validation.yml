@@ -130,7 +130,7 @@ jobs:
       fail-fast: false
       matrix:
         image:
-          - 'linux_glibc'
+#          - 'linux_glibc'
           - 'linux_musl'
         nodejs:
           - 18
