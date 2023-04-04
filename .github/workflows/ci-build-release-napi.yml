@@ -22,6 +22,8 @@ on:
   push:
     tags:
       - '*'
+    branches:
+      - 'try_fix_linux'
 env:
   FORCE_COLOR: 1
 concurrency:
