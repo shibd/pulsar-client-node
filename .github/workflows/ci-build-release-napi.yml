@@ -22,7 +22,7 @@ on:
   push:
     tags:
       - '*'
-    branch:
+    branches:
       - 'test-linux'
 env:
   FORCE_COLOR: 1
