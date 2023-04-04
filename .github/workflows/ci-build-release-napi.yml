@@ -80,7 +80,7 @@ jobs:
         run: |
           npm install --ignore-scripts
           npx node-pre-gyp configure --target_arch=${{ matrix.arch }}
-          npx node-pre-gyp build --target_arch=${{ matrix.arch }}
+          LDFLAGS="-Wl,--exclude-libs,ALL" npx node-pre-gyp build --target_arch=${{ matrix.arch }}
 
       - name: Test loading Node binaries lib
         if: matrix.arch == 'x64'
@@ -196,7 +196,7 @@ jobs:
         run: |
           npm install --ignore-scripts
           npx node-pre-gyp configure --target_arch=${{ env.TARGET }}
-          npx node-pre-gyp build --target_arch=${{ env.TARGET }}
+          LDFLAGS="-Wl,--exclude-libs,ALL" npx node-pre-gyp build --target_arch=${{ env.TARGET }}
 
       - name: Test loading Node binaries lib
         run: |
