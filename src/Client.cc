@@ -38,6 +38,8 @@ static const std::string CFG_USE_TLS = "useTls";
 static const std::string CFG_TLS_TRUST_CERT = "tlsTrustCertsFilePath";
 static const std::string CFG_TLS_VALIDATE_HOSTNAME = "tlsValidateHostname";
 static const std::string CFG_TLS_ALLOW_INSECURE = "tlsAllowInsecureConnection";
+static const std::string CFG_TLS_CERTIFICATE_FILE_PATH = "tlsCertificateFilePath";
+static const std::string CFG_TLS_PRIVATE_KEY_FILE_PATH = "tlsPrivateKeyFilePath";
 static const std::string CFG_STATS_INTERVAL = "statsIntervalInSeconds";
 static const std::string CFG_LOG = "log";
 
@@ -175,6 +177,12 @@ Client::Client(const Napi::CallbackInfo &info) : Napi::ObjectWrap<Client>(info) 
     pulsar_client_configuration_set_validate_hostname(cClientConfig.get(), tlsValidateHostname.Value());
   }
 
+  if (clientConfig.Has(CFG_TLS_ALLOW_INSECURE) && clientConfig.Get(CFG_TLS_ALLOW_INSECURE).IsBoolean()) {
+    Napi::Boolean tlsAllowInsecureConnection = clientConfig.Get(CFG_TLS_ALLOW_INSECURE).ToBoolean();
+    pulsar_client_configuration_set_tls_allow_insecure_connection(cClientConfig.get(),
+                                                                  tlsAllowInsecureConnection.Value());
+  }
+  
   if (clientConfig.Has(CFG_TLS_ALLOW_INSECURE) && clientConfig.Get(CFG_TLS_ALLOW_INSECURE).IsBoolean()) {
     Napi::Boolean tlsAllowInsecureConnection = clientConfig.Get(CFG_TLS_ALLOW_INSECURE).ToBoolean();
     pulsar_client_configuration_set_tls_allow_insecure_connection(cClientConfig.get(),
