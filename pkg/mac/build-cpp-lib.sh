@@ -31,6 +31,7 @@ tar xfz apache-pulsar-client-cpp-${CPP_CLIENT_VERSION}.tar.gz
 pushd apache-pulsar-client-cpp-${CPP_CLIENT_VERSION}
   rm -f CMakeCache.txt
   cmake . \
+      -DCMAKE_CXX_STANDARD=11
       -DCMAKE_OSX_ARCHITECTURES=${ARCH} \
       -DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET} \
       -DCMAKE_INSTALL_PREFIX=$PULSAR_PREFIX \
