@@ -167,6 +167,7 @@ if [ ! -f curl-${CURL_VERSION}.done ]; then
     curl -O -L  https://github.com/curl/curl/releases/download/curl-${CURL_VERSION_}/curl-${CURL_VERSION}.tar.gz
     tar xfz curl-${CURL_VERSION}.tar.gz
     pushd curl-${CURL_VERSION}
+      cp -rf $PREFIX/include/openssl include/
       CFLAGS="-I$PREFIX/include -fPIC -arch ${ARCH} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}" \
             ./configure --with-ssl=$PREFIX \
               --without-nghttp2 \
