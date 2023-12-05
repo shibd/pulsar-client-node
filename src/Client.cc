@@ -182,7 +182,7 @@ Client::Client(const Napi::CallbackInfo &info) : Napi::ObjectWrap<Client>(info) 
     pulsar_client_configuration_set_tls_allow_insecure_connection(cClientConfig.get(),
                                                                   tlsAllowInsecureConnection.Value());
   }
-  
+
   if (clientConfig.Has(CFG_TLS_ALLOW_INSECURE) && clientConfig.Get(CFG_TLS_ALLOW_INSECURE).IsBoolean()) {
     Napi::Boolean tlsAllowInsecureConnection = clientConfig.Get(CFG_TLS_ALLOW_INSECURE).ToBoolean();
     pulsar_client_configuration_set_tls_allow_insecure_connection(cClientConfig.get(),
