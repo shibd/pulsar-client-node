@@ -74,7 +74,7 @@ jobs:
     name: Build NAPI macos - Node ${{matrix.nodejs}} - ${{matrix.arch}}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 3000
-
+    
     strategy:
       fail-fast: false
       matrix:
