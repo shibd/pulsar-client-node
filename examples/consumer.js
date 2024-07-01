@@ -19,27 +19,36 @@
 
 const Pulsar = require('../');
 
+const service_url = '';
+const auth_params = '';
+
 (async () => {
-  // Create a client
+
+  const auth = new Pulsar.AuthenticationToken({
+    token: auth_params,
+  });
+
   const client = new Pulsar.Client({
-    serviceUrl: 'pulsar://localhost:6650',
+    serviceUrl: service_url,
+    authentication: auth,
     operationTimeoutSeconds: 30,
   });
 
-  // Create a consumer
-  const consumer = await client.subscribe({
-    topic: 'persistent://public/default/my-topic',
-    subscription: 'sub1',
-    subscriptionType: 'Shared',
-    ackTimeoutMs: 10000,
+  Pulsar.Client.setLogHandler((level, file, line, message) => {
+    console.log('[%s][%s:%d] %s', Pulsar.LogLevel.toString(level), file, line, message);
   });
 
-  // Receive messages
-  for (let i = 0; i < 10; i += 1) {
-    const msg = await consumer.receive();
-    console.log(msg.getData().toString());
-    consumer.acknowledge(msg);
-  }
+  const consumer = await client.subscribe({
+    topic: 'persistent://public/default/loginRecord',
+    subscription: 'sn-test',
+    subscriptionInitialPosition: 'Earliest',
+    batchReceivePolicy: {
+      maxNumMessages: 100,
+    }
+  });
+
+  const msg = await consumer.batchReceive();
+  console.log("debug: " + msg.length);
 
   await consumer.close();
   await client.close();
