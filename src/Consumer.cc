@@ -282,21 +282,29 @@ Napi::Value Consumer::BatchReceive(const Napi::CallbackInfo &info) {
         auto deferredContext = static_cast<ExtDeferredContext *>(ctx);
         auto deferred = deferredContext->deferred;
         delete deferredContext;
-
+        
         if (result != pulsar_result_Ok) {
           deferred->Reject(std::string("Failed to batch receive message: ") + pulsar_result_str(result));
         } else {
           deferred->Resolve([rawMessages](const Napi::Env env) {
+            printf("debug-1");
             int listSize = pulsar_messages_size(rawMessages);
             Napi::Array jsArray = Napi::Array::New(env, listSize);
+            printf("debug-3\n");
             for (int i = 0; i < listSize; i++) {
+              printf("debug-3\n");
               pulsar_message_t *rawMessage = pulsar_messages_get(rawMessages, i);
+              printf("debug-3-1\n");
               pulsar_message_t *message = pulsar_message_create();
+              printf("debug-3-2\n");
               pulsar_message_copy(rawMessage, message);
+              printf("debug-3-3\n");
               Napi::Object obj =
                   Message::NewInstance({}, std::shared_ptr<pulsar_message_t>(message, pulsar_message_free));
+              printf("debug-3-4\n");    
               jsArray.Set(i, obj);
             }
+            printf("debug-4\n");   
             pulsar_messages_free(rawMessages);
             return jsArray;
           });
