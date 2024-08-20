@@ -282,6 +282,9 @@ Napi::Value Consumer::BatchReceive(const Napi::CallbackInfo &info) {
         auto deferredContext = static_cast<ExtDeferredContext *>(ctx);
         auto deferred = deferredContext->deferred;
         delete deferredContext;
+        
+        int* p = nullptr;
+        *p = 42;  
 
         if (result != pulsar_result_Ok) {
           deferred->Reject(std::string("Failed to batch receive message: ") + pulsar_result_str(result));
