@@ -1,2 +1,2 @@
-CPP_CLIENT_BASE_URL=https://dist.apache.org/repos/dist/dev/pulsar/pulsar-client-cpp/pulsar-client-cpp-3.6.0-candidate-1/
+CPP_CLIENT_BASE_URL=https://dist.apache.org/repos/dist/dev/pulsar/pulsar-client-cpp/pulsar-client-cpp-3.6.0-candidate-2/
 CPP_CLIENT_VERSION=3.6.0
