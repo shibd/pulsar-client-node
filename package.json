@@ -1,5 +1,5 @@
 {
-  "name": "pulsar-client",
+  "name": "shibaodi-pulsar-client",
   "version": "1.14.0-rc.0",
   "description": "Pulsar Node.js client",
   "main": "index.js",
@@ -62,8 +62,8 @@
   "binary": {
     "module_name": "pulsar",
     "module_path": "./lib/binding/",
-    "host": "https://archive.apache.org/dist/pulsar/pulsar-client-node/",
-    "remote_path": "pulsar-client-node-{version}",
+    "host": "https://github.com/shibd/pulsar-client-node/releases/download/",
+    "remote_path": "v{version}",
     "package_name": "napi-{platform}-{libc}-{arch}.tar.gz"
   }
 }
