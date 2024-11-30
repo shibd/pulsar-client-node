@@ -25,15 +25,27 @@ cd $SRC_DIR
 
 build-support/pulsar-test-service-stop.sh
 
-CONTAINER_ID=$(docker run -i -p 8080:8080 -p 6650:6650 -p 8443:8443 -p 6651:6651 --rm --detach apachepulsar/pulsar:latest sleep 3600)
+CONTAINER_ID=$(docker run -i -p 8080:8080 -p 6650:6650 -p 8443:8443 -p 6651:6651 --rm --detach czcoder/pulsar:3.3.0-0771f81 sleep 3600)
 
 echo $CONTAINER_ID >.tests-container-id.txt
 
-docker cp $SRC_DIR/tests/conf $CONTAINER_ID:/pulsar/test-conf
-docker cp $SRC_DIR/tests/certificate/server.crt $CONTAINER_ID:/pulsar/test-conf
-docker cp $SRC_DIR/tests/certificate/server.key $CONTAINER_ID:/pulsar/test-conf
-docker cp $SRC_DIR/build-support/pulsar-test-container-start.sh $CONTAINER_ID:pulsar-test-container-start.sh
+docker exec -i $CONTAINER_ID mkdir -p /tmp/pulsar/test-conf
+docker cp $SRC_DIR/tests/conf/* $CONTAINER_ID:/tmp/pulsar/test-conf
+docker cp $SRC_DIR/tests/certificate/server.crt $CONTAINER_ID:/tmp/pulsar/test-conf
+docker cp $SRC_DIR/tests/certificate/server.key $CONTAINER_ID:/tmp/pulsar/test-conf
+docker cp $SRC_DIR/build-support/pulsar-test-container-start.sh $CONTAINER_ID:/tmp/pulsar/pulsar-test-container-start.sh
 
-docker exec -i $CONTAINER_ID /pulsar-test-container-start.sh
+docker exec -i $CONTAINER_ID /tmp/pulsar/pulsar-test-container-start.sh
+
+echo "-- Wait for Pulsar service to be ready"
+for i in $(seq 30); do
+    curl http://localhost:8080/metrics > /dev/null 2>&1 && break
+    if [ $i -lt 30 ]; then
+        sleep 1
+    else
+        echo '-- Pulsar standalone server startup timed out'
+        exit 1
+    fi
+done
 
 echo "-- Ready to start tests"
