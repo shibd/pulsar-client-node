@@ -23,6 +23,8 @@
 #include <napi.h>
 #include <pulsar/c/producer_configuration.h>
 
+struct MessageRouterContext;
+
 class ProducerConfig {
  public:
   ProducerConfig(const Napi::Object &producerConfig);
@@ -33,6 +35,7 @@ class ProducerConfig {
  private:
   std::shared_ptr<pulsar_producer_configuration_t> cProducerConfig;
   std::string topic;
+  std::unique_ptr<MessageRouterContext> routerContext;
 };
 
 #endif

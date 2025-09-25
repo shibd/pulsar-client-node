@@ -73,6 +73,7 @@ Napi::Value Producer::NewInstance(const Napi::CallbackInfo &info, std::shared_pt
         auto instanceContext = static_cast<ProducerNewInstanceContext *>(ctx);
         auto deferred = instanceContext->deferred;
         auto cClient = instanceContext->cClient;
+        auto producerConfig = instanceContext->producerConfig; 
         delete instanceContext;
 
         if (result != pulsar_result_Ok) {
@@ -81,10 +82,11 @@ Napi::Value Producer::NewInstance(const Napi::CallbackInfo &info, std::shared_pt
 
         std::shared_ptr<pulsar_producer_t> cProducer(rawProducer, pulsar_producer_free);
 
-        deferred->Resolve([cProducer](const Napi::Env env) {
+        deferred->Resolve([cProducer, producerConfig](const Napi::Env env) {
           Napi::Object obj = Producer::constructor.New({});
           Producer *producer = Producer::Unwrap(obj);
           producer->SetCProducer(cProducer);
+          producer->producerConfig = producerConfig;
           return obj;
         });
       },
@@ -107,6 +109,9 @@ Napi::Value Producer::Send(const Napi::CallbackInfo &info) {
   auto cMessage = Message::BuildMessage(info[0].As<Napi::Object>());
   auto deferred = ThreadSafeDeferred::New(Env());
   auto ctx = new ProducerSendContext(deferred, cMessage);
+  
+  pulsar_message_set_property()
+  
 
   pulsar_producer_send_async(
       this->cProducer.get(), cMessage.get(),
