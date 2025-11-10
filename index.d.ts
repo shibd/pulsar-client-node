@@ -29,6 +29,8 @@ export interface ClientConfig {
   tlsTrustCertsFilePath?: string;
   tlsValidateHostname?: boolean;
   tlsAllowInsecureConnection?: boolean;
+  tlsCertificateFilePath?: string;
+  tlsPrivateKeyFilePath?: string;
   statsIntervalInSeconds?: number;
   listenerName?: string;
   log?: (level: LogLevel, file: string, line: number, message: string) => void;
